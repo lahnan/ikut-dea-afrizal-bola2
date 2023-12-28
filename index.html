@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Control Browser</title>
+    <style>
+        #circle1 {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-color: #DD143B;
+            border-radius: 50%;
+        }
+
+        #circle2 {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-color: #FF8D01;
+            border-radius: 50%;
+        }
+
+        #circle3 {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-color: #8A2CE3;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="">Ngulik Web Bareng Dea</h1>
+    <div id="circle">
+
+        <div id="circle1">
+            <div id="circle2">
+            </div>
+            <div id="circle3"></div>
+        </div>
+    </div>
+    
+    <script>
+        const circleChannel1 = new BroadcastChannel("circle1_channel")
+        const circle = document.getElementById("circle")
+        const circle1 = document.getElementById("circle1")
+        const circle2 = document.getElementById("circle2")
+        const circle3 = document.getElementById("circle3")
+
+        
+        // circle 1
+        function circleMovement(event) {
+            const x = event.clientX, y = event.clientY
+            circle1.style.display = "flex";
+            circle1.style.flexDirection = "row-reverse";
+            circle1.style.left = x + "px";
+            circle1.style.right = "";
+            circle1.style.top = y + "px";
+            circle1.style.width = "140px";
+            circle2.style.width = "120px";
+            circle3.style.width = "100px";
+
+            circleChannel1.postMessage({x , y})
+        }
+
+        circleChannel1.onmessage = (event) => {
+            const {x, y} = event.data
+            circle1.style.display = "flex";
+            circle1.style.flexDirection = "row";
+            circle1.style.right = x + "px";
+            circle1.style.left = "";
+            circle1.style.top = y + "px";
+            circle1.style.width = "140px";
+            circle2.style.width = "120px";
+            circle3.style.width = "100px";
+        } 
+
+        
+        addEventListener("mousemove", circleMovement)
+    </script>
+</body>
+</html>
